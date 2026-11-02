@@ -1,529 +1,200 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>谢雨捷 | 华中师范大学 国家公费师范生 数学试讲合集</title>
-<style>
-  :root{
-    --ink:#0f2744;
-    --muted:#64748b;
-    --primary:#0f3460;
-    --line:#e2e8f0;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:"Microsoft YaHei","PingFang SC","Helvetica Neue",Arial,sans-serif;
-    color:var(--ink);
-    line-height:1.65;
-    background:
-      radial-gradient(1000px 500px at 90% -100px, rgba(59,130,246,.1), transparent 70%),
-      linear-gradient(180deg,#eef3f9 0%,#f7fafc 46%,#f5f8fc 100%);
-    min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  .container{
-    max-width:1160px;
-    margin:0 auto;
-    padding:40px 24px 60px;
-  }
-
-  /* ============ 顶部 Header ============ */
-  .header{
-    position:relative;
-    overflow:hidden;
-    padding:45px 24px 50px;
-    color:#fff;
-    background:linear-gradient(135deg,#0f2744 0%,#0f3460 50%,#1e3a5f 100%);
-    border-radius:16px;
-    margin-bottom:32px;
-    box-shadow:0 18px 40px -28px rgba(15,23,42,.75);
-    display:flex; /* 让内部元素水平排列 */
-    align-items:center; /* 垂直居中 */
-    justify-content:flex-start;
-    gap:36px;
-    flex-wrap:wrap;
-  }
-  .header::before{ /* 点阵纹理 */
-    content:"";
-    position:absolute;inset:0;
-    background-image:radial-gradient(rgba(255,255,255,.1) 1px,transparent 1px);
-    background-size:24px 24px;
-    -webkit-mask-image:linear-gradient(105deg,#000 10%,transparent 80%);
-    mask-image:linear-gradient(105deg,#000 10%,transparent 80%);
-    pointer-events:none;
-  }
-  .header::after{ /* 右上方光晕 */
-    content:"";
-    position:absolute;top:-220px;right:-150px;
-    width:500px;height:500px;border-radius:50%;
-    background:radial-gradient(circle,rgba(96,165,250,.25),transparent 64%);
-    pointer-events:none;
-  }
-
-  .logo-wrap {
-    flex: 0 0 auto;
-    z-index: 1;
-  }
-  .school-logo {
-    height: 85px; /* Logo 尺寸 */
-    width: auto;
-    mix-blend-mode: screen; /* 去除深色背景 */
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-    transition: transform 0.3s ease;
-  }
-  .school-logo:hover {
-    transform: scale(1.03);
-  }
-
-  .header-info {
-    flex: 1;
-    z-index: 1;
-    text-align: left;
-  }
-  .header-info h1 {
-    font-size: 32px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-shadow: 0 2px 14px rgba(0,0,0,.28);
-    margin-bottom: 8px;
-  }
-  .header-info p {
-    font-size: 16px;
-    letter-spacing: 1px;
-    color: rgba(226,236,247,.85);
-  }
-
-  /* ============ 说明卡片 ============ */
-  .desc-card {
-    background: #ffffff;
-    padding: 24px 32px;
-    border-radius: 14px;
-    box-shadow: 0 4px 20px -10px rgba(15, 52, 96, 0.15);
-    margin-bottom: 40px;
-    border-left: 6px solid #3b82f6;
-    position: relative;
-  }
-  .desc-card p {
-    font-size: 15px;
-    color: #475569;
-    text-align: justify;
-    line-height: 1.8;
-  }
-
-  /* ============ 视频区域 ============ */
-  .section-title-wrap {
-    display: flex;
-    align-items: center;
-    margin-bottom: 26px;
-  }
-  .section-title-wrap h2 {
-    color: var(--primary);
-    font-size: 24px;
-    font-weight: 600;
-    position: relative;
-    padding-left: 16px;
-  }
-  .section-title-wrap h2::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 5px;
-    height: 22px;
-    background: #3b82f6;
-    border-radius: 3px;
-  }
-
-  .video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-    gap: 26px;
-  }
-
-  .video-card {
-    position: relative;
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(226,232,240,.9);
-    box-shadow: 0 4px 12px -4px rgba(15,23,42,.06), 0 12px 28px -16px rgba(15,23,42,.3);
-    cursor: pointer;
-    transition: transform .35s cubic-bezier(.2,.7,.3,1), box-shadow .35s, border-color .35s;
-  }
-  .video-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(148,180,220,.55);
-    box-shadow: 0 10px 20px -6px rgba(15,23,42,.08), 0 30px 56px -26px rgba(15,23,42,.45);
-  }
-
-  /* 视频封面（渐变+数学符号） */
-  .video-cover {
-    position: relative;
-    height: 185px;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
-  }
-  .video-cover::before {
-    content: attr(data-symbol);
-    position: absolute;
-    right: 10px;
-    bottom: -30px;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 130px;
-    font-weight: 700;
-    line-height: 1;
-    color: rgba(255,255,255,.14);
-    pointer-events: none;
-    user-select: none;
-  }
-  /* 悬停高光扫过 */
-  .video-cover::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,.3) 46%, transparent 60%);
-    transform: translateX(-130%);
-    transition: transform .85s ease;
-    pointer-events: none;
-  }
-  .video-card:hover .video-cover::after {
-    transform: translateX(130%);
-  }
-
-  .cover-no {
-    position: absolute;
-    left: 16px;
-    top: 14px;
-    z-index: 2;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: rgba(255,255,255,.9);
-    background: rgba(15,23,42,.3);
-    padding: 4px 10px;
-    border-radius: 6px;
-    backdrop-filter: blur(4px);
-  }
-
-  /* 播放按钮 */
-  .play {
-    position: relative;
-    z-index: 2;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: rgba(255,255,255,.92);
-    box-shadow: 0 8px 20px rgba(0,0,0,.25);
-    transition: transform .3s, box-shadow .3s, background .3s;
-  }
-  .play::after {
-    content: "";
-    width: 0;
-    height: 0;
-    margin-left: 4px;
-    border-left: 16px solid var(--c1);
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-  }
-  .video-card:hover .play {
-    transform: scale(1.1);
-    background: #fff;
-    box-shadow: 0 0 0 6px rgba(255,255,255,.2), 0 10px 24px rgba(0,0,0,.3);
-  }
-
-  .video-info {
-    padding: 18px 20px;
-  }
-  .video-info h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--ink);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* 文字太长省略 */
-  }
-
-  /* ============ 视频灯箱 ============ */
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    background: rgba(10,18,32,.92);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-  }
-  .lightbox.show {
-    display: flex;
-    animation: fade .25s ease;
-  }
-  .lightbox-content {
-    position: relative;
-    width: 90%;
-    max-width: 1000px;
-    aspect-ratio: 16 / 9;
-  }
-  .lightbox iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 40px rgba(0,0,0,.5);
-    background: #000;
-  }
-  .lightbox-close {
-    position: absolute;
-    top: -46px;
-    right: 0;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-size: 24px;
-    line-height: 1;
-    color: #fff;
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.24);
-    cursor: pointer;
-    transition: background .2s, transform .2s;
-  }
-  .lightbox-close:hover {
-    background: rgba(255,255,255,.24);
-    transform: rotate(90deg);
-  }
-
-  /* ============ 页脚 ============ */
-  footer {
-    text-align: center;
-    margin-top: 60px;
-    padding-top: 24px;
-    color: #94a3b8;
-    font-size: 14px;
-    border-top: 1px solid var(--line);
-  }
-
-  @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* ============ 响应式 ============ */
-  @media (max-width: 768px) {
-    .header {
-      flex-direction: column;
-      text-align: center;
-      gap: 20px;
-      padding: 36px 20px;
-    }
-    .header-info {
-      text-align: center;
-    }
-    .header-info h1 {
-      font-size: 26px;
-    }
-    .school-logo {
-      height: 70px;
-    }
-    .container {
-      padding: 24px 16px 40px;
-    }
-    .video-grid {
-      grid-template-columns: 1fr;
-    }
-    .video-cover {
-      height: 200px;
-    }
-    .lightbox {
-      padding: 18px;
-    }
-    .lightbox-close {
-      top: -42px;
-      width: 34px;
-      height: 34px;
-      font-size: 20px;
-    }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谢雨捷 | 华中师范大学 国家公费师范生 数学试讲合集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", SimHei, sans-serif;
+        }
+        body {
+            background-color: #f0f4f9;
+            color: #222;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        /* 顶部深蓝色头部 */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: #0f3460;
+            color: #ffffff;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 16px rgba(15, 52, 96, 0.25);
+        }
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 14px;
+        }
+        header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        /* 无标题纯文字说明卡片 */
+        .desc-card {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(15, 52, 96, 0.12);
+            margin-bottom: 40px;
+        }
+        .desc-card p {
+            font-size: 16px;
+            color: #333;
+            text-align: justify;
+        }
+        /* 视频区域通用样式 */
+        .video-section h2 {
+            color: #0f3460;
+            margin-bottom: 26px;
+            font-size: 24px;
+            border-left: 6px solid #0f3460;
+            padding-left: 14px;
+        }
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+            gap: 30px;
+        }
+        .video-item {
+            background: #fff;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(15, 52, 96, 0.12);
+        }
+        .video-item h3 {
+            color: #0f3460;
+            margin-bottom: 16px;
+            font-size: 19px;
+        }
+        .iframe-wrap {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* 底部页脚 */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            color: #555;
+            font-size: 15px;
+            border-top: 1px solid #d6e0ed;
+        }
+        /* 移动端适配 */
+        @media (max-width: 580px) {
+            .video-list {
+                grid-template-columns: 1fr;
+            }
+            .iframe-wrap {
+                height: 220px;
+            }
+            header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>谢雨捷 高中数学试讲视频</h1>
+            <p>华中师范大学 · 国家公费师范生</p>
+        </header>
 
-  <div class="container">
-    
-    <!-- 顶部区域 -->
-    <header class="header">
-      <div class="logo-wrap">
-        <img src="logo.png" alt="华中师范大学" class="school-logo">
-      </div>
-      <div class="header-info">
-        <h1>谢雨捷 数学试讲合集</h1>
-        <p>华中师范大学 · 国家公费师范生</p>
-      </div>
-    </header>
+        <!-- 无标题纯文字说明卡片 -->
+        <div class="desc-card">
+            <p>本页面收录9节高中数学课堂试讲实录，涵盖函数、圆锥曲线、三角函数、平面向量、解三角形、排列组合等核心教学课题，完整展示教学设计、课堂导入、新知讲授、例题讲解、课堂小结全流程教学基本功。</p>
+        </div>
 
-    <!-- 说明卡片 -->
-    <div class="desc-card">
-      <p>本页面收录 9 节高中数学课堂试讲实录，涵盖函数、圆锥曲线、三角函数、平面向量、解三角形、排列组合等核心教学课题，完整展示教学设计、课堂导入、新知讲授、例题讲解、课堂小结全流程教学基本功。</p>
+        <section class="video-section">
+            <h2>试讲视频</h2>
+            <div class="video-list">
+                <!-- 1.平面向量基本定理 -->
+                <div class="video-item">
+                    <h3>1. 平面向量基本定理</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1MT3G6jEfp&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 2.椭圆及其标准方程 -->
+                <div class="video-item">
+                    <h3>2. 椭圆及其标准方程</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1bT3G6jEVM&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 3.任意角 -->
+                <div class="video-item">
+                    <h3>3. 任意角</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1Vz3G6sETa&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 4.三角函数的概念 -->
+                <div class="video-item">
+                    <h3>4. 三角函数的概念</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1X63G69EvU&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 5.诱导公式 -->
+                <div class="video-item">
+                    <h3>5. 诱导公式</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1ST3G6jEPc&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 6.函数的概念 -->
+                <div class="video-item">
+                    <h3>6. 函数的概念</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV18N3G6mEuS&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 7.二次函数与一元二次方程、不等式 -->
+                <div class="video-item">
+                    <h3>7. 二次函数与一元二次方程、不等式</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1MT3G6jEC5&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 8.排列数 -->
+                <div class="video-item">
+                    <h3>8. 排列数</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1MM3G61Euw&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!-- 9.余弦定理 -->
+                <div class="video-item">
+                    <h3>9. 余弦定理</h3>
+                    <div class="iframe-wrap">
+                        <iframe src="https://player.bilibili.com/player.html?bvid=BV1uN3G6mEz7&page=1&autoplay=0" scrolling="no" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            © 2026 谢雨捷 | 华中师范大学 国家公费师范生 数学试讲作品集
+        </footer>
     </div>
-
-    <!-- 视频列表区 -->
-    <section class="video-section">
-      <div class="section-title-wrap">
-        <h2>试讲视频</h2>
-      </div>
-      
-      <div class="video-grid">
-        <!-- 1.平面向量基本定理 -->
-        <article class="video-card" onclick="openVideo('BV1MT3G6jEfp')">
-          <div class="video-cover" style="--c1:#1e3a5f;--c2:#2f6fb5" data-symbol="∑">
-            <span class="cover-no">01</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>平面向量基本定理</h3>
-          </div>
-        </article>
-
-        <!-- 2.椭圆及其标准方程 -->
-        <article class="video-card" onclick="openVideo('BV1bT3G6jEVM')">
-          <div class="video-cover" style="--c1:#134e6f;--c2:#0e7490" data-symbol="e">
-            <span class="cover-no">02</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>椭圆及其标准方程</h3>
-          </div>
-        </article>
-
-        <!-- 3.任意角 -->
-        <article class="video-card" onclick="openVideo('BV1Vz3G6sETa')">
-          <div class="video-cover" style="--c1:#0f4c5c;--c2:#0d9488" data-symbol="∠">
-            <span class="cover-no">03</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>任意角</h3>
-          </div>
-        </article>
-
-        <!-- 4.三角函数的概念 -->
-        <article class="video-card" onclick="openVideo('BV1X63G69EvU')">
-          <div class="video-cover" style="--c1:#155e75;--c2:#0891b2" data-symbol="sin">
-            <span class="cover-no">04</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>三角函数的概念</h3>
-          </div>
-        </article>
-
-        <!-- 5.诱导公式 -->
-        <article class="video-card" onclick="openVideo('BV1ST3G6jEPc')">
-          <div class="video-cover" style="--c1:#0b3d4c;--c2:#0f766e" data-symbol="π">
-            <span class="cover-no">05</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>诱导公式</h3>
-          </div>
-        </article>
-
-        <!-- 6.函数的概念 -->
-        <article class="video-card" onclick="openVideo('BV18N3G6mEuS')">
-          <div class="video-cover" style="--c1:#1e3a5f;--c2:#2563eb" data-symbol="f(x)">
-            <span class="cover-no">06</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>函数的概念</h3>
-          </div>
-        </article>
-
-        <!-- 7.二次函数与一元二次方程、不等式 -->
-        <article class="video-card" onclick="openVideo('BV1MT3G6jEC5')">
-          <div class="video-cover" style="--c1:#3730a3;--c2:#4f46e5" data-symbol="x²">
-            <span class="cover-no">07</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>二次函数与一元二次方程、不等式</h3>
-          </div>
-        </article>
-
-        <!-- 8.排列数 -->
-        <article class="video-card" onclick="openVideo('BV1MM3G61Euw')">
-          <div class="video-cover" style="--c1:#312e81;--c2:#6366f1" data-symbol="A">
-            <span class="cover-no">08</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>排列数</h3>
-          </div>
-        </article>
-
-        <!-- 9.余弦定理 -->
-        <article class="video-card" onclick="openVideo('BV1uN3G6mEz7')">
-          <div class="video-cover" style="--c1:#164e63;--c2:#06b6d4" data-symbol="cos">
-            <span class="cover-no">09</span>
-            <span class="play" aria-hidden="true"></span>
-          </div>
-          <div class="video-info">
-            <h3>余弦定理</h3>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <footer>
-      © 2026 谢雨捷 | 华中师范大学 国家公费师范生 数学试讲作品集
-    </footer>
-
-  </div>
-
-  <!-- 视频灯箱 -->
-  <div class="lightbox" id="videoLightbox" onclick="closeVideo()">
-    <div class="lightbox-content" onclick="event.stopPropagation()">
-      <span class="lightbox-close" onclick="closeVideo()">&times;</span>
-      <iframe id="bilibiliPlayer" src="" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-    </div>
-  </div>
-
-<script>
-  const lightbox = document.getElementById('videoLightbox');
-  const player = document.getElementById('bilibiliPlayer');
-
-  // 打开视频灯箱
-  function openVideo(bvid) {
-    // 加上关闭弹幕、高清画质、宽屏模式的参数
-    player.src = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1&autoplay=0&danmaku=0&as_wide=1&high_quality=1`;
-    lightbox.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-
-  // 关闭视频灯箱
-  function closeVideo() {
-    player.src = '';
-    lightbox.classList.remove('show');
-    document.body.style.overflow = '';
-  }
-
-  // ESC 关闭
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('show')) {
-      closeVideo();
-    }
-  });
-</script>
 </body>
 </html>
